@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const baaner = require('./banner');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
@@ -26,7 +27,7 @@ module.exports = {
         use: {
           loader: 'url-loader', // url 로더를 설정한다
           options: {
-            publicPath: './dist/', // file-loader와 동일
+            publicPath: './', // file-loader와 동일
             name: '[name].[ext]?[hash]', // file-loader와 동일
             limit: 5000, // 5kb 미만 파일만 data url로 처리
           },
@@ -42,6 +43,21 @@ module.exports = {
       PRODUCTION: JSON.stringify(false),
       MAX_COUNT: JSON.stringify(999),
       'api.domain': JSON.stringify('http://dev.api.domain.com'),
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html', // 템플릿 경로를 지정
+      hash: true, // 정적 파일을 불러올때 쿼리문자열에 웹팩 해쉬값을 추가한다
+      minify:
+        process.env.NODE_ENV === 'production'
+          ? {
+              collapseWhitespace: true, // 빈칸 제거
+              removeComments: true, // 주석 제거
+            }
+          : false,
+      templateParameters: {
+        // 템플릿에 주입할 파라매터 변수 지정
+        env: process.env.NODE_ENV === 'development' ? '(개발용)' : '',
+      },
     }),
   ],
 };
