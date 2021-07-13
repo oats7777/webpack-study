@@ -1,4 +1,9 @@
-/*! 이것은 배너 입니다 */
+/*!
+ * commitVersion: 2e4f626
+ * Build Date: 2021. 7. 13. 오후 9:26:39
+ * Author: mint7777
+ * 
+ */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
