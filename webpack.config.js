@@ -21,10 +21,13 @@ module.exports = {
       },
       {
         test: /\.jpeg$/,
-        loader: 'file-loader',
-        options: {
-          publicPath: './dist/', // prefix를 아웃풋 경로로 지정
-          name: '[name].[ext]?[hash]', // 파일명 형식
+        use: {
+          loader: 'url-loader', // url 로더를 설정한다
+          options: {
+            publicPath: './dist/', // file-loader와 동일
+            name: '[name].[ext]?[hash]', // file-loader와 동일
+            limit: 5000, // 5kb 미만 파일만 data url로 처리
+          },
         },
       },
     ],
