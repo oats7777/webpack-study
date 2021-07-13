@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const baaner = require('./banner');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'development',
@@ -21,7 +22,12 @@ module.exports = {
       },
       {
         test: /\.css$/, // .css 확장자로 끝나는 모든 파일
-        use: ['style-loader', 'css-loader'], // css-loader를 적용한다
+        use: [
+          process.env.NODE_ENV === 'production'
+            ? MiniCssExtractPlugin.loader // 프로덕션 환경
+            : 'style-loader', // 개발 환경
+          'css-loader',
+        ], // css-loader를 적용한다
       },
       {
         test: /\.jpeg$/,
@@ -37,6 +43,9 @@ module.exports = {
     ],
   },
   plugins: [
+    ...(process.env.NODE_ENV === 'production'
+      ? [new MiniCssExtractPlugin({ filename: `[name].css` })]
+      : []),
     new webpack.BannerPlugin(baaner),
     new webpack.DefinePlugin({
       TWO: '1+1',
