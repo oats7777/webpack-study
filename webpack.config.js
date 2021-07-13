@@ -19,6 +19,10 @@ module.exports = {
         test: /\.css$/, // .css 확장자로 끝나는 모든 파일
         use: ['style-loader', 'css-loader'], // css-loader를 적용한다
       },
+      {
+        test: /\.jpeg$/,
+        loader: 'file-loader',
+      },
     ],
   },
 };

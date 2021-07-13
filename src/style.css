@@ -1,3 +1,5 @@
 body {
-  background: rebeccapurple;
+  /* background: rebeccapurple;
+   */
+  background-image: url(bg.jpeg);
 }
